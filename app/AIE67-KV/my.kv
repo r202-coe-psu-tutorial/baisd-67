@@ -1,0 +1,21 @@
+<LoginScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        BoxLayout:
+            orientation: 'horizontal'
+            Label:
+                text: 'Username'
+            TextInput:
+                id: username
+                hint_text: 'Enter your username here'
+        BoxLayout:
+            orientation: 'horizontal'
+            Label:
+                text: 'Password'
+            TextInput:
+                id: password
+                hint_text: 'Enter your password here'
+                password: True
+        Button:
+            text: 'Click me!'
+            on_press: root.login_callback(username.text, password.text)
