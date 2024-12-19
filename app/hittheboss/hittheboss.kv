@@ -1,14 +1,22 @@
 <HitTheBossGame>:
-    monster: boss
+    monster: monster
+    score_panel: score_panel
     canvas:
     Monster:
-        id: boss
+        id: monster
         center: self.parent.center
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            id: score_panel
+            text: 'Score: 0'
+            
 
 
 <Monster>:
-    size: 50, 50
+    size: 100, 100
     canvas:
         Ellipse:
+            source: 'images/mudeng.png'
             pos: self.pos
             size: self.size

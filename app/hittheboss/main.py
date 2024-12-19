@@ -12,6 +12,8 @@ class Monster(Widget):
     velocity_x = NumericProperty(0)
     velocity_y = NumericProperty(0)
 
+    score = NumericProperty(0)
+
     # referencelist property so we can use ball.velocity as
     # a shorthand, just like e.g. w.pos for w.x and w.y
     velocity = ReferenceListProperty(velocity_x, velocity_y)
@@ -21,9 +23,19 @@ class Monster(Widget):
     def move(self):
         self.pos = Vector(*self.velocity) + self.pos
 
+
+    def hit_monster(self, touch):
+        if (self.x <= touch.x <= self.x+self.size[0]) and (self.y <= touch.y <= self.y+self.size[1]):
+            self.score += 1
+            print('hit', self.score)
+            return True
+        
+        print('miss')
+        return False
+
 class HitTheBossGame(Widget):
     monster = ObjectProperty(None)
-
+    score_panel = ObjectProperty(None)
 
     def release_monster(self):
         self.monster.center = self.center
@@ -39,6 +51,10 @@ class HitTheBossGame(Widget):
         # bounce off left and right
         if (self.monster.x < 0) or (self.monster.right > self.width):
             self.monster.velocity_x *= -1
+
+    def on_touch_down(self, touch):
+        if self.monster.hit_monster(touch):
+            self.score_panel.text = f'Score: {self.monster.score}'
 
 class HitTheBossApp(App):
     def build(self):
